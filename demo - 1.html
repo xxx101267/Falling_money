@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body{
+			background-color: black;
+			overflow: hidden;
+		}
+
+	</style>
+</head>
+<body>
+
+
+
+	<script  src='js/jquery.js'></script>
+
+	<script type="text/javascript">
+		//--------------------------------------------
+		//随机情况：
+			//雪花产生时，距离浏览器左边是随机的
+			//雪花的透明度是随机的
+
+			//雪花下降时降落的速度是随机的
+			//雪花下降时大小是随机的
+			//雪花下降时距离浏览器左边是随机的
+
+		//布局：
+			//雪花落下需要绝对定位absolute
+
+		//需要获取：
+			//浏览器的宽高
+
+		//使用的知识点：
+			//雪花每隔多少秒生成一个==间隔定时器
+
+
+
+
+
+		//--------------------------------------------
+		//定义变量
+
+
+		var minSize=5;//雪花最小尺寸
+		var maxSize=50;//雪花最大尺寸
+		var flakeColoe='white';//雪的颜色
+
+		var newOn=200;//每200毫秒产生一个新的雪花（可以控制雪的多少量）、
+		
+		var flake=$('<div></div>')
+					.css({'position':'absolute','top':'-200px'})
+					.html("<img src='img/1.jpg' style='width:100px;'/>");//一个雪花就是一个div，创建一个雪花
+
+
+		$(function(){
+			var documentHeight=$(document).height();//获取浏览器的高度
+			var documentWidth=$(document).width();//获取浏览器的宽度
+
+			setInterval(function(){
+				var starPositionLeft=Math.random()*documentWidth;//初始雪花距离浏览器左侧随机
+				var starOpacity=0.7+Math.random()*0.3;//初始雪花的透明度随机（0.3+0.7=1）
+
+				var endPositionTop=documentHeight;//最终雪花的top值（是一个固定值）
+				var endPositionLeft=Math.random()*documentWidth;//最终雪花距离浏览器左侧随机
+
+				var durationFall=2000+Math.random()*3000;//雪花在飘落经过的时间随机秒数（2秒到5秒的随机）
+
+				var sizeFlake=minSize+Math.random()*maxSize;//雪花的大小随机（最小值+随机最大值）
+
+				flake.clone().appendTo('body').css({
+					'left':starPositionLeft,
+					'opacity':starOpacity,
+					'font-size':sizeFlake,
+					'color':flakeColoe
+				}).animate({
+					'top':endPositionTop,
+					'left':endPositionLeft,
+					'opacity':0.5
+				},durationFall,function(){
+					$(this).remove();
+				})
+			},newOn)
+		})
+
+
+		//console.log(flake)
+
+
+	</script>
+</body>
+</html>
